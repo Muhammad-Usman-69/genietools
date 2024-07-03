@@ -23,31 +23,20 @@ class Genie
         return $str;
     }
 
-    protected function setError($err)
+    protected function Error($err)
     {
         $this->error = $err;
+        echo json_encode(["error" => $this->error]);
+        exit();
     }
 
-    function getError()
+    function dbConnect($server, $user, $pass, $db)
     {
-        return $this->error;
-    }
-
-    function printError()
-    {
-        if ($this->error) {
-            echo json_encode(["error" => $this->error]);
-            exit();
-        }
-    }
-
-    function dbConnect($server, $user, $pass, $db) {
         $this->conn = new mysqli($server, $user, $pass, $db);
-    } 
+    }
 
     function getToolNames()
     {
-
         try {
             $sql = "SELECT * FROM `tools`";
             $stmt = $this->conn->prepare($sql);
@@ -60,7 +49,28 @@ class Genie
             $this->conn->close();
             return $names;
         } catch (Exception $err) {
-            $this->setError("Database connection failed.");
+            $this->Error("Database connection failed.");
+            return;
+        }
+    }
+
+    function saveToDb($id, $method, $type, $prompt, $url)
+    {
+        // Taking current time
+        date_default_timezone_set("Asia/Karachi");
+        $time = date("Y:m:d g:i a");
+
+        try {
+            $sql = "INSERT INTO `prompts` (`id`, `method`, `type`, `prompt`, `url`, `time`) VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("ssssss", $id, $method, $type, $prompt, $url, $time);
+            $stmt->execute();
+            $stmt->close();
+            $this->conn->close();
+        } catch (Exception $err) {
+            $this->Error("Couldn't save file. Please try later.");
+            //deleting file
+            unlink($url);
             return;
         }
     }

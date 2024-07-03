@@ -23,12 +23,12 @@ class ImgToImg extends Genie
 
         //check if file has extension which is not allowed
         if (!in_array($fileActualExt, $allowed)) {
-            $this->setError("Type not Supported.");
+            $this->Error("Type not Supported.");
         }
 
         //check if there is any error in file uploaded
         if ($this->fileError !== 0) {
-            $this->setError("Error occured. Please try later.");
+            $this->Error("Error occured. Please try later.");
         }
 
         $this->checked = true;
@@ -38,8 +38,7 @@ class ImgToImg extends Genie
     {
         //if not checked
         if ($this->checked == false) {
-            $this->setError("Not Checked.");
-            return;
+            $this->Error("Not Checked.");
         }
 
         //creating destination
@@ -48,42 +47,25 @@ class ImgToImg extends Genie
         $share_url = "{$_SERVER["SERVER_NAME"]}/v1/images/" . $name . ".jpg";
 
         //changing image
-        $img = imagecreatefrompng($this->fileTmpName);
+        $img = @imagecreatefrompng($this->fileTmpName); //suppress error with @
+
+
+        if ($img === false) {
+            $this->Error("Invalid PNG file.");
+        }
+
         $result = imagejpeg($img, $destination, 100);
 
-        if ($result == false) {
-            $this->setError("Image conversion failed.");
-            return;
+        if ($result === false) {
+            $this->Error("Image conversion failed.");
         }
 
         imagedestroy($img);
 
         return [
             "id" => $name,
-            "image_url" => $destination,
+            "url" => $destination,
             "share_url" => $share_url
         ];
-    }
-
-    function saveToDb($id, $method, $type, $prompt, $url)
-    {
-
-        // Taking current time
-        date_default_timezone_set("Asia/Karachi");
-        $time = date("Y:m:d g:i a");
-
-        try {
-            $sql = "INSERT INTO `prompts` (`id`, `method`, `type`, `prompt`, `url`, `time`) VALUES (?, ?, ?, ?, ?, ?)";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("ssssss", $id, $method, $type, $prompt, $url, $time);
-            $stmt->execute();
-            $stmt->close();
-            $this->conn->close();
-        } catch (Exception $err) {
-            $this->setError("Database connection failed.");
-            //deleting file
-            unlink($url);
-            return;
-        }
     }
 }

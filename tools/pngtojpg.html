@@ -7,17 +7,20 @@
     <meta name="author" content="Muhammad Usman">
     <link rel="stylesheet" href="../side/styles/style.css">
     <link rel="shortcut icon" href="../images/logo.jpg" type="image/x-icon">
-    <title>PngToJpg - GenieTools</title>
+    <title>Png To Jpg - GenieTools</title>
 </head>
 
 <body class="flex items-center justify-center h-screen font-sans bg-[#e4eaf2]">
+    <button id="home"
+        class="absolute m-5 top-0 left-0 text-[#d1a514] bg-white py-2 px-4 rounded-lg border border-yellow-400">Home</button>
+
     <div class="min-w-[350px] m-4 md:min-w-[450px] bg-white rounded-lg">
         <div class="flex flex-col items-center justify-center border-white py-4 space-y-3">
             <img src="../images/logo.jpg" width="80px" height="80px" class="rounded-full">
-            <p class="text-center font-semibold text-[##01172e] text-lg">GenieTools - PngToJpg</p>
+            <p class="text-center font-semibold text-[##01172e] text-lg">GenieTools - Png To Jpg</p>
         </div>
         <div id="retrieved" class="hidden">
-            <img src="" class="md:w-[450px] border-y" id="image">
+            <img src="" class="md:w-[450px] border-y" id="file">
             <div class="p-3 flex justify-between">
                 <div class="space-x-3 flex items-center">
                     <a id="facebook" target="_blank">
@@ -48,7 +51,7 @@
         <form action="" id="form" class="flex items-center rounded-b-lg p-3 text-sm space-y-3 flex-col"
             enctype="application/x-www-form-urlencoded">
             <div class="flex w-full">
-                <input type="file" id="file" class="outline-none border p-3 w-full rounded-l-lg" required
+                <input type="file" id="input-file" class="outline-none border p-3 w-full rounded-l-lg" required
                     accept="image/*" />
                 <button type="submit"
                     class="bg-[#fac100] text-white py-3 px-4 rounded-r-lg border border-yellow-400">Submit</button>

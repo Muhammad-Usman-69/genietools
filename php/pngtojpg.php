@@ -20,22 +20,10 @@ $obj = new ImgToImg();
 //check ext
 $check = $obj->Check($img, $allowed);
 
-//checking error
-$obj->printError();
-
 $result = $obj->PngToJpg();
-
-//checking error
-$obj->printError();
 
 $obj->dbConnect(DATABASE_HOSTNAME, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_NAME);
 
-//checking error
-$obj->printError();
-
-$obj->saveToDb($result["id"], "Png To Jpg", "image", "none", $result["image_url"]);
-
-// Check for errors
-$obj->printError();
+$obj->saveToDb($result["id"], "Png To Jpg", "image", "none", $result["url"]);
 
 echo json_encode($result);
