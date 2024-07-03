@@ -41,8 +41,8 @@ CREATE TABLE `prompts` (
 --
 
 INSERT INTO `prompts` (`id`, `method`, `type`, `prompt`, `url`, `time`) VALUES
-('genie-texttoaudio-1dpiekpi', 'Text To Audio', 'image', 'Dorothy', '../v1/audio/genie-texttoaudio-1dpiekpi.mp3', '2024:07:03 12:14 pm'),
-('genie-texttoaudio-aj60wj1o', 'Text To Audio', 'image', 'Or is it?', '../v1/audio/genie-texttoaudio-aj60wj1o.mp3', '2024:07:03 12:24 pm'),
+('genie-texttoaudio-1dpiekpi', 'Text To Audio', 'audio', 'Dorothy', '../v1/audio/genie-texttoaudio-1dpiekpi.mp3', '2024:07:03 12:14 pm'),
+('genie-texttoaudio-aj60wj1o', 'Text To Audio', 'audio', 'Or is it?', '../v1/audio/genie-texttoaudio-aj60wj1o.mp3', '2024:07:03 12:24 pm'),
 ('genietools-pngtojpg-9j4u7wdo', 'Png To Jpg', 'image', 'none', '../v1/images/genietools-pngtojpg-9j4u7wdo.jpg', '2024:07:03 11:54 am'),
 ('genietools-pngtojpg-fadq9n3u', 'Png To Jpg', 'image', 'none', '../v1/images/genietools-pngtojpg-fadq9n3u.jpg', '2024:07:03 12:21 pm'),
 ('genietools-pngtojpg-q5lmicqf', 'Png To Jpg', 'image', 'none', '../v1/images/genietools-pngtojpg-q5lmicqf.jpg', '2024:07:03 12:17 pm'),

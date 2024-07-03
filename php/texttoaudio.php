@@ -32,6 +32,6 @@ $obj = new AI();
 $result = $obj->TextToAudio($prompt, $voice, $apiKey);
 
 $obj->dbConnect(DATABASE_HOSTNAME, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_NAME);
-$obj->saveToDb($result["id"], "Text To Audio", "image", $prompt, $result["url"]);
+$obj->saveToDb($result["id"], "Text To Audio", "audio", $prompt, $result["url"]);
 
 echo json_encode($result);
