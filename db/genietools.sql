@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 03, 2024 at 09:24 AM
+-- Generation Time: Jul 03, 2024 at 11:11 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,11 +43,13 @@ CREATE TABLE `prompts` (
 INSERT INTO `prompts` (`id`, `method`, `type`, `prompt`, `url`, `time`) VALUES
 ('genie-texttoaudio-1dpiekpi', 'Text To Audio', 'audio', 'Dorothy', '../v1/audio/genie-texttoaudio-1dpiekpi.mp3', '2024:07:03 12:14 pm'),
 ('genie-texttoaudio-aj60wj1o', 'Text To Audio', 'audio', 'Or is it?', '../v1/audio/genie-texttoaudio-aj60wj1o.mp3', '2024:07:03 12:24 pm'),
-('genietools-pngtojpg-9j4u7wdo', 'Png To Jpg', 'image', 'none', '../v1/images/genietools-pngtojpg-9j4u7wdo.jpg', '2024:07:03 11:54 am'),
-('genietools-pngtojpg-fadq9n3u', 'Png To Jpg', 'image', 'none', '../v1/images/genietools-pngtojpg-fadq9n3u.jpg', '2024:07:03 12:21 pm'),
-('genietools-pngtojpg-q5lmicqf', 'Png To Jpg', 'image', 'none', '../v1/images/genietools-pngtojpg-q5lmicqf.jpg', '2024:07:03 12:17 pm'),
-('genietools-pngtojpg-sdnflyx0', 'Png To Jpg', 'image', 'none', '../v1/images/genietools-pngtojpg-sdnflyx0.jpg', '2024:07:02 4:25 pm'),
-('genietools-pngtojpg-t38ybmxb', 'Png To Jpg', 'image', 'none', '../v1/images/genietools-pngtojpg-t38ybmxb.jpg', '2024:07:02 4:58 pm');
+('genie-texttoimage-hzwpfj8x', 'Text To Image', 'image', 'create an image of lelouch vi britannia drinking bo\'oh\'o\'wa\'er', '../v1/image/genie-texttoimage-hzwpfj8x.jpeg', '2024:07:03 2:11 pm'),
+('genie-texttoimage-lej8a2tz', 'Text To Image', 'image', 'A cat doing podcast with elon musk', '../v1/image/genie-texttoimage-lej8a2tz.jpeg', '2024:07:03 2:01 pm'),
+('genietools-pngtojpg-9j4u7wdo', 'Png To Jpg', 'image', 'none', '../v1/image/genietools-pngtojpg-9j4u7wdo.jpg', '2024:07:03 11:54 am'),
+('genietools-pngtojpg-fadq9n3u', 'Png To Jpg', 'image', 'none', '../v1/image/genietools-pngtojpg-fadq9n3u.jpg', '2024:07:03 12:21 pm'),
+('genietools-pngtojpg-q5lmicqf', 'Png To Jpg', 'image', 'none', '../v1/image/genietools-pngtojpg-q5lmicqf.jpg', '2024:07:03 12:17 pm'),
+('genietools-pngtojpg-sdnflyx0', 'Png To Jpg', 'image', 'none', '../v1/image/genietools-pngtojpg-sdnflyx0.jpg', '2024:07:02 4:25 pm'),
+('genietools-pngtojpg-t38ybmxb', 'Png To Jpg', 'image', 'none', '../v1/image/genietools-pngtojpg-t38ybmxb.jpg', '2024:07:02 4:58 pm');
 
 -- --------------------------------------------------------
 

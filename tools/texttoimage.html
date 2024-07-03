@@ -7,7 +7,7 @@
     <meta name="author" content="Muhammad Usman">
     <link rel="stylesheet" href="../side/styles/style.css">
     <link rel="shortcut icon" href="../images/logo.jpg" type="image/x-icon">
-    <title>Text To Audio - GenieTools</title>
+    <title>Text To Image - GenieTools</title>
 </head>
 
 <body class="flex items-center justify-center h-screen font-sans bg-[#e4eaf2]">
@@ -15,13 +15,13 @@
         class="absolute m-5 top-0 left-0 text-[#d1a514] bg-white py-2 px-4 rounded-lg border border-yellow-400">Home</button>
 
     <div class="min-w-[400px] m-4 bg-white rounded-lg">
-        <div class="flex flex-col items-center justify-center border-white py-4 space-y-3">
+        <div class="flex flex-col items-center justify-center border-white py-4 rounded-t-lg space-y-3">
             <img src="../images/logo.jpg" width="80px" height="80px" class="rounded-full">
-            <p class="text-center font-semibold text-[##01172e] text-lg">GenieTools - Text To Audio</p>
+            <p class="text-center font-semibold text-[##01172e] text-lg">GenieTools - Text To Image</p>
         </div>
         <div id="retrieved" class="hidden">
-            <div class="grid place-items-center px-3">
-                <audio controls class="w-full" id="file" src=""></audio>
+            <div class="flex justify-center">
+                <img src="" class="border-y max-h-[400px] max-w-[400px]" id="file">
             </div>
             <div class="p-3 flex justify-between">
                 <div class="space-x-3 flex items-center">
@@ -48,18 +48,24 @@
                 </div>
             </div>
         </div>
-        <p id="process" class="py-3 px-5 bg-green-300 text-green-800 hidden">Your Audio is being processed...</p>
+        <p id="process" class="py-3 px-5 bg-green-300 text-green-800 hidden">Your Image is being processed...</p>
         <p id="error" class="py-3 px-5 bg-red-300 text-red-800 hidden"></p>
+
         <form action="" id="form" class="flex items-center rounded-b-lg p-3 text-sm space-y-3 flex-col">
             <div class="flex justify-between w-full items-center">
-                <span class="px-2">Voice and Accent:</span>
-                <select name="voice" id="voice" class="px-3 py-2 outline-none border rounded-lg" required>
+                <span class="px-2">Aspect Ratio:</span>
+                <select name="aspect_ratio" id="aspect_ratio" class="px-3 py-2 outline-none border rounded-lg" required>
+                    <option value="1:1">1:1</option>
+                    <option value="13:19">13:19</option>
+                    <option value="19:13">19:13</option>
+                    <option value="2:3">2:3</option>
+                    <option value="3:2">3:2</option>
                 </select>
             </div>
 
             <div class="flex w-full">
-                <input type="text" name="prompt" id="prompt" placeholder="Write about your audio"
-                    class="text-[#001c2d] outline-none border px-3 py-3 w-full rounded-l-lg" minlength="5" required />
+                <input type="text" name="prompt" id="prompt" placeholder="Write about your image"
+                    class="text-[#001c2d] outline-none border px-3 py-3 w-full rounded-l-lg" minlength="11" />
                 <button type="submit"
                     class="bg-[#fac100] text-white py-3 px-4 rounded-r-lg border border-yellow-400">Submit</button>
             </div>
@@ -68,8 +74,8 @@
 </body>
 
 <script src="../side/scripts/dev.js"></script>
+
 <script>
-    document.addEventListener("load", getVoice());
     document.getElementById("form").addEventListener("submit", (e) => {
         //hiding previous error and process
         document.getElementById("error").classList.add("hidden");
@@ -78,7 +84,7 @@
         //preventing default submit
         e.preventDefault();
 
-        TextToAudio();
+        TextToImage();
     })
 </script>
 

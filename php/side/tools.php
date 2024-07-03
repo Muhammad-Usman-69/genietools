@@ -1,6 +1,7 @@
 <?php
-require __DIR__ . "/config.php";
-require "../genielibrary/autoload.php";
+
+require "../config.php";
+require "../../genielibrary/autoload.php";
 
 header("Content-Type: application/json");
 

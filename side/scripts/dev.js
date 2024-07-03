@@ -2,6 +2,62 @@ document.getElementById("home").addEventListener("click", () => {
     window.location.assign("/");
 });
 
+function loadData(data) {
+    console.log(data);
+
+    //check if error
+    if (data["error"] != undefined) {
+        document.getElementById("process").classList.add("hidden");
+        document.getElementById("error").classList.remove("hidden");
+        document.getElementById("error").innerHTML = data["error"];
+        return;
+    }
+
+    //hiding process and form
+    document.getElementById("process").classList.add("hidden");
+    document.getElementById("form").classList.add("hidden");
+
+    //taking cresidentials
+    let url = data["url"];
+    let share_url = data["share_url"];
+    let id = data["id"];
+
+    //changing image
+    document.getElementById("retrieved").classList.remove("hidden");
+    document.getElementById("file").src = url;
+
+    //loading if audio file
+    if (url.includes("audio")) {
+        document.getElementById("file").load();
+    }
+
+    //changing download id
+    document.getElementById("download_id").value = id;
+
+    //sending share url to share
+    share(share_url);
+}
+
+function share(share_url) {
+    //share on social media
+    const link = encodeURI(share_url);
+    const msg = encodeURIComponent('Hey, Check out this Image');
+
+    document.getElementById('facebook').href =
+        `https://www.facebook.com/share.php?u=${link}`;
+
+    document.getElementById('whatsapp').href =
+        `https://api.whatsapp.com/send?text=${msg}: ${link}`;
+
+    document.getElementById('twitter').href =
+        `https://x.com/intent/post?url=${link}&text=${msg}&hashtags=ai,image`;
+
+    //copying link
+    document.getElementById("clipboard").addEventListener("click", () => {
+        navigator.clipboard.writeText(share_url);
+    })
+}
+
 async function PngToJpg() {
 
     //showing that request is being proceded
@@ -71,7 +127,7 @@ async function TextToAudio() {
 }
 
 async function getVoice() {
-    let res = await fetch("../php/voices.php");
+    let res = await fetch("../php/side/voices.php");
     let data = await res.json();
 
     data.map(language => {
@@ -80,54 +136,32 @@ async function getVoice() {
     })
 }
 
-function loadData(data) {
-    console.log(data);
+async function TextToImage() {
+    //showing that request is being proceded
+    document.getElementById("process").classList.remove("hidden");
 
-    //check if error
-    if (data["error"] != undefined) {
-        document.getElementById("process").classList.add("hidden");
-        document.getElementById("error").classList.remove("hidden");
-        document.getElementById("error").innerHTML = data["error"];
-        return;
-    }
+    //taking prompt and aspect ratio
+    let prompt = document.getElementById("prompt").value;
+    let aspectRatio = document.getElementById("aspect_ratio").value;
 
-    //hiding process and form
-    document.getElementById("process").classList.add("hidden");
-    document.getElementById("form").classList.add("hidden");
+    //clearing prompt
+    document.getElementById("prompt").value = "";
 
-    //taking cresidentials
-    let audio = data["url"];
-    let share_url = data["share_url"];
-    let id = data["id"];
+    //declaring endpoint
+    let url = "../php/texttoimage.php";
 
-    //changing image
-    document.getElementById("retrieved").classList.remove("hidden");
-    document.getElementById("file").src = audio;
-    document.getElementById("file").load();
+    let res = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({
+            "prompt": prompt,
+            "aspect_ratio": aspectRatio
+        })
+    });
 
-    //changing download id
-    document.getElementById("download_id").value = id;
+    let data = await res.json();
 
-    //sending share url to share
-    share(share_url);
-}
-
-function share(share_url) {
-    //share on social media
-    const link = encodeURI(share_url);
-    const msg = encodeURIComponent('Hey, Check out this Image');
-
-    document.getElementById('facebook').href =
-        `https://www.facebook.com/share.php?u=${link}`;
-
-    document.getElementById('whatsapp').href =
-        `https://api.whatsapp.com/send?text=${msg}: ${link}`;
-
-    document.getElementById('twitter').href =
-        `https://x.com/intent/post?url=${link}&text=${msg}&hashtags=ai,image`;
-
-    //copying link
-    document.getElementById("clipboard").addEventListener("click", () => {
-        navigator.clipboard.writeText(share_url);
-    })
+    loadData(data);
 }

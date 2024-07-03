@@ -43,8 +43,8 @@ class ImgToImg extends Genie
 
         //creating destination
         $name = "genietools-pngtojpg-" . $this->random_str(8);
-        $destination = "../v1/images/" . $name . ".jpg";
-        $share_url = "{$_SERVER["SERVER_NAME"]}/v1/images/" . $name . ".jpg";
+        $destination = "../v1/image/" . $name . ".jpg";
+        $share_url = "{$_SERVER["SERVER_NAME"]}/v1/image/" . $name . ".jpg";
 
         //changing image
         $img = @imagecreatefrompng($this->fileTmpName); //suppress error with @

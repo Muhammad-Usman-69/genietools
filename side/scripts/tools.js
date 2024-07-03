@@ -1,6 +1,6 @@
 //fetch tools name and their image
 async function fetchTools() {
-    const endpoint = "./php/tools.php";
+    const endpoint = "../php/side/tools.php";
     let res = await fetch(endpoint);
     let tools = await res.json();
     tools.map(tool => {

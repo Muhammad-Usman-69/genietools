@@ -1,7 +1,7 @@
 <?php
 
-require "../genielibrary/autoload.php";
-require "./config.php";
+require "../config.php";
+require "../../genielibrary/autoload.php";
 
 $obj = new AI();
 

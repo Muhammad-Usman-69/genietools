@@ -109,4 +109,67 @@ class AI extends Genie
             $this->Error("Server not responding, please try later.");
         }
     }
+
+    function TextToImage($prompt, $aspect_ratio, $apiKey)
+    {
+        try {
+            $client = new Client();
+
+            $endpoint = 'https://api.limewire.com/api/image/generation';
+
+            //sending message
+            $response = $client->post($endpoint, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $apiKey,
+                    'Accept' => 'application/json',
+                    'X-Api-Version' => 'v1',
+                    "Content-Type: application/json"
+                ],
+                'json' => [
+                    'prompt' => "$prompt",
+                    'aspect_ratio' => "$aspect_ratio"
+                ]
+
+            ]);
+
+            //getting data
+            $responseBody = $response->getBody()->getContents();
+            $responseData = json_decode($responseBody, true);
+
+            $status = $responseData["status"];
+
+            //check if status is completed
+            if ($status != "COMPLETED") {
+                $this->Error("Request couldn't be finished");
+            }
+
+            
+            //creating id
+            $id = "genie-texttoimage-" . $this->random_str(8);
+
+            //saving image
+            $remote_url = $responseData["data"][0]["asset_url"];
+
+            //getting extension
+            $type = $responseData["data"][0]["type"];
+            $typeArr = explode("/", $type);
+            $file_ext = end($typeArr);
+
+            $url = "../v1/image/$id.$file_ext";
+
+            file_put_contents($url, file_get_contents($remote_url));
+
+            $share_url = "{$_SERVER["SERVER_NAME"]}/v1/audio/$id.$file_ext";
+
+            return [
+                "url" => $url,
+                "share_url" => $share_url,
+                "id" => $id
+            ];
+
+        } catch (ClientException $e) {
+            // Handle the request exception
+            $this->Error("Server not responding, please try later.");
+        }
+    }
 }
