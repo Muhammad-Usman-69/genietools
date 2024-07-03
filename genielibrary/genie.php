@@ -32,7 +32,11 @@ class Genie
 
     function dbConnect($server, $user, $pass, $db)
     {
-        $this->conn = new mysqli($server, $user, $pass, $db);
+        try {
+            $this->conn = new mysqli($server, $user, $pass, $db);
+        } catch (Exception $err) {
+            $this->Error("Connection failed. Please try later.");
+        }
     }
 
     function getToolNames()
@@ -50,7 +54,6 @@ class Genie
             return $names;
         } catch (Exception $err) {
             $this->Error("Database connection failed.");
-            return;
         }
     }
 
@@ -68,10 +71,9 @@ class Genie
             $stmt->close();
             $this->conn->close();
         } catch (Exception $err) {
-            $this->Error("Couldn't save file. Please try later.");
             //deleting file
             unlink($url);
-            return;
+            $this->Error("Couldn't save file. Please try later.");
         }
     }
 }
