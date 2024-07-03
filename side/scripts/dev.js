@@ -107,6 +107,43 @@ async function PngToJpg() {
     loadData(data);
 }
 
+async function JpgToPng() {
+
+    //showing that request is being proceded
+    document.getElementById("process").classList.remove("hidden");
+
+    //taking data
+    let fileInput = document.getElementById("input-file");
+
+    // Check if any files are selected
+    if (fileInput.files.length === 0) {
+        console.log("No file selected");
+        return;
+    }
+
+    let file = fileInput.files[0];
+
+    // Create a FormData object to hold the file
+    let formData = new FormData();
+    formData.append("image", file);
+
+    //clearing image
+    document.getElementById("input-file").value = "";
+
+    //declaring endpoint
+    let url = "../php/jpgtopng.php";
+
+    let res = await fetch(url, {
+        method: "POST",
+        body: formData
+    });
+
+    let data = await res.json();
+
+    //sending data to load Function
+    loadData(data);
+}
+
 async function TextToAudio() {
     //showing that request is being proceded
     document.getElementById("process").classList.remove("hidden");
