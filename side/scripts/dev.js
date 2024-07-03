@@ -25,8 +25,8 @@ function loadData(data) {
     //changing image
     document.getElementById("retrieved").classList.remove("hidden");
 
-    //if result is text
-    if (id.includes("totext")) {
+    //if result isn't shareable (i.e. text)
+    if (share_url == "") {
         document.getElementById("text").value = url;
         return;
     }
@@ -206,6 +206,36 @@ async function ImageToText() {
     let res = await fetch(url, {
         method: "POST",
         body: formData
+    });
+
+    let data = await res.json();
+
+    //sending data to load Function
+    loadData(data);
+}
+
+async function TextToMD5() {
+    
+    //showing that request is being proceded
+    document.getElementById("process").classList.remove("hidden");
+
+    //taking data
+    let text = document.getElementById("input-text").value;
+
+    //clearing prompt
+    document.getElementById("input-text").value = "";
+
+    //declaring endpoint
+    let url = "../php/texttomd5.php";
+
+    let res = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({
+            "text": text
+        })
     });
 
     let data = await res.json();
