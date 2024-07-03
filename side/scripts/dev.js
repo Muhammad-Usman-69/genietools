@@ -24,10 +24,17 @@ function loadData(data) {
 
     //changing image
     document.getElementById("retrieved").classList.remove("hidden");
+
+    //if result is text
+    if (id.includes("totext")) {
+        document.getElementById("text").value = url;
+        return;
+    }
+
     document.getElementById("file").src = url;
 
     //loading if audio file
-    if (url.includes("audio")) {
+    if (id.includes("audio")) {
         document.getElementById("file").load();
     }
 
@@ -58,6 +65,11 @@ function share(share_url) {
     })
 }
 
+function copy(word) {
+    //copying word
+    navigator.clipboard.writeText(word);
+}
+
 async function PngToJpg() {
 
     //showing that request is being proceded
@@ -79,7 +91,7 @@ async function PngToJpg() {
     formData.append("image", file);
 
     //clearing image
-    document.getElementById("file").value = "";
+    document.getElementById("input-file").value = "";
 
     //declaring endpoint
     let url = "../php/pngtojpg.php";
@@ -163,5 +175,41 @@ async function TextToImage() {
 
     let data = await res.json();
 
+    loadData(data);
+}
+
+async function ImageToText() {
+    //showing that request is being proceded
+    document.getElementById("process").classList.remove("hidden");
+
+    //taking data
+    let fileInput = document.getElementById("input-file");
+
+    // Check if any files are selected
+    if (fileInput.files.length === 0) {
+        console.log("No file selected");
+        return;
+    }
+
+    let file = fileInput.files[0];
+
+    // Create a FormData object to hold the file
+    let formData = new FormData();
+    formData.append("image", file);
+
+    //clearing image
+    document.getElementById("input-file").value = "";
+
+    //declaring endpoint
+    let url = "../php/imagetotext.php";
+
+    let res = await fetch(url, {
+        method: "POST",
+        body: formData
+    });
+
+    let data = await res.json();
+
+    //sending data to load Function
     loadData(data);
 }

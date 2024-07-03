@@ -1,10 +1,11 @@
 <?php
 
-class ImgToImg extends Genie
+class Image extends Genie
 {
     public $fileName;
     public $fileTmpName;
     public $fileError;
+    public $fileActualExt;
     protected $error = false;
     public $checked = false;
 
@@ -19,10 +20,10 @@ class ImgToImg extends Genie
         $fileExt = explode(".", $this->fileName);
 
         //making it lower case and taking (last element) extension like .jpg
-        $fileActualExt = strtolower(end($fileExt));
+        $this->fileActualExt = strtolower(end($fileExt));
 
         //check if file has extension which is not allowed
-        if (!in_array($fileActualExt, $allowed)) {
+        if (!in_array($this->fileActualExt, $allowed)) {
             $this->Error("Type not Supported.");
         }
 
@@ -42,9 +43,9 @@ class ImgToImg extends Genie
         }
 
         //creating destination
-        $name = "genietools-pngtojpg-" . $this->random_str(8);
-        $destination = "../v1/image/" . $name . ".jpg";
-        $share_url = "{$_SERVER["SERVER_NAME"]}/v1/image/" . $name . ".jpg";
+        $id = "genietools-pngtojpg-" . $this->random_str(8);
+        $destination = "../v1/image/" . $id . ".jpg";
+        $share_url = "{$_SERVER["SERVER_NAME"]}/v1/image/" . $id . ".jpg";
 
         //changing image
         $img = @imagecreatefrompng($this->fileTmpName); //suppress error with @
@@ -63,9 +64,34 @@ class ImgToImg extends Genie
         imagedestroy($img);
 
         return [
-            "id" => $name,
+            "id" => $id,
             "url" => $destination,
             "share_url" => $share_url
+        ];
+    }
+
+    function ImgToText()
+    {
+        //if not checked
+        if ($this->checked == false) {
+            $this->Error("Not Checked.");
+        }
+
+        //creating id
+        $id = "genietools-imagetotext-" . $this->random_str(8);
+
+        //converting to text
+        try {
+            $data = file_get_contents($this->fileTmpName);
+            $dataUri = 'data:image/' . $this->fileActualExt . ';base64,' . base64_encode($data);
+        } catch (Exception $e) {
+            $this->Error("Internal error. Please try later.");
+        }
+
+        return [
+            "id" => $id,
+            "url" => $dataUri,
+            "share_url" => ""
         ];
     }
 }
