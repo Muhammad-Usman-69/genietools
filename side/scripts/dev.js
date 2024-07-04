@@ -17,6 +17,9 @@ async function loadData(data) {
     document.getElementById("process").classList.add("hidden");
     document.getElementById("form").classList.add("hidden");
 
+    //removing retrieved
+    document.getElementById("retrieved").classList.remove("hidden");
+
     //taking cresidentials
     let id = data["id"];
 
@@ -28,9 +31,6 @@ async function loadData(data) {
 
     let url = data["url"];
     let share_url = data["share_url"];
-
-    //changing image
-    document.getElementById("retrieved").classList.remove("hidden");
 
     document.getElementById("file").src = url;
 
@@ -425,3 +425,32 @@ async function CaseConvert(type) {
     loadData(data);
 }
 
+async function WordCounter() {
+    
+    //showing that request is being proceded
+    document.getElementById("process").classList.remove("hidden");
+
+    //taking data
+    let text = document.getElementById("input-text").value;
+
+    //clearing prompt
+    document.getElementById("input-text").value = "";
+
+    //declaring endpoint
+    let url = "../php/wordcounter.php";
+
+    let res = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({
+            "text": text
+        })
+    });
+
+    let data = await res.json();
+
+    //sending data to load Function
+    loadData(data);
+}

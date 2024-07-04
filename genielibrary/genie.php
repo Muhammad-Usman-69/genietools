@@ -61,12 +61,14 @@ class Genie
 
     function saveToDb($id, $method, $type, $prompt, $url)
     {
+        // return;
+
         // Taking current time
         date_default_timezone_set("Asia/Karachi");
         $time = date("Y:m:d g:i a");
 
         try {
-            $sql = "INSERT INTO `prompts` (`id`, `method`, `type`, `prompt`, `url`, `time`) VALUES (?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO `prompts` (`id`, `method`, `type`, `prompt`, `url/result`, `time`) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $this->conn->prepare($sql);
             $stmt->bind_param("ssssss", $id, $method, $type, $prompt, $url, $time);
             $stmt->execute();

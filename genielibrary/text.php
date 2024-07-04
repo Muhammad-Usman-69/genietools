@@ -38,4 +38,22 @@ class Text extends Genie
             "text" => $result
         ];
     }
+
+    function WordCounter($text)
+    {
+        $words = str_word_count($text);
+
+        // Remove non-letter characters
+        $onlyLetters = preg_replace("/[^a-zA-Z]/", "", $text);
+        $letters = strlen($onlyLetters);
+
+        $result = "Words: $words Letters: $letters";
+
+        $id = "genietools-wordcounter-" . $this->random_str(8);
+
+        return [
+            "id" => $id,
+            "text" => $result
+        ];
+    }
 }
