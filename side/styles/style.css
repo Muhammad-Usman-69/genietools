@@ -566,6 +566,10 @@ video {
   top: 0px;
 }
 
+.m-3 {
+  margin: 0.75rem;
+}
+
 .m-4 {
   margin: 1rem;
 }
@@ -577,6 +581,24 @@ video {
 .mx-5 {
   margin-left: 1.25rem;
   margin-right: 1.25rem;
+}
+
+.mx-3 {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
+
+.mx-4 {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.mb-0 {
+  margin-bottom: 0px;
+}
+
+.mt-0 {
+  margin-top: 0px;
 }
 
 .flex {
@@ -599,10 +621,6 @@ video {
   height: 100vh;
 }
 
-.h-\[400px\] {
-  height: 400px;
-}
-
 .max-h-\[400px\] {
   max-height: 400px;
 }
@@ -615,20 +633,20 @@ video {
   width: 2.25rem;
 }
 
-.w-full {
-  width: 100%;
-}
-
 .w-\[400px\] {
   width: 400px;
 }
 
-.min-w-\[400px\] {
-  min-width: 400px;
+.w-full {
+  width: 100%;
 }
 
 .max-w-\[400px\] {
   max-width: 400px;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .flex-row {
@@ -657,6 +675,10 @@ video {
 
 .justify-between {
   justify-content: space-between;
+}
+
+.gap-4 {
+  gap: 1rem;
 }
 
 .space-x-3 > :not([hidden]) ~ :not([hidden]) {
@@ -724,6 +746,11 @@ video {
   border-bottom-width: 1px;
 }
 
+.border-black {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity));
+}
+
 .border-gray-800 {
   --tw-border-opacity: 1;
   border-color: rgb(31 41 55 / var(--tw-border-opacity));
@@ -737,11 +764,6 @@ video {
 .border-yellow-400 {
   --tw-border-opacity: 1;
   border-color: rgb(250 204 21 / var(--tw-border-opacity));
-}
-
-.border-black {
-  --tw-border-opacity: 1;
-  border-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
 
 .bg-\[\#e4eaf2\] {
@@ -847,6 +869,18 @@ video {
   font-weight: 600;
 }
 
+.uppercase {
+  text-transform: uppercase;
+}
+
+.lowercase {
+  text-transform: lowercase;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
 .text-\[\#\#01172e\] {
   color: ##01172e;
 }
@@ -889,14 +923,4 @@ video {
 .active\:bg-\[\#dfad09\]:active {
   --tw-bg-opacity: 1;
   background-color: rgb(223 173 9 / var(--tw-bg-opacity));
-}
-
-@media (min-width: 640px) {
-  .sm\:max-h-\[400px\] {
-    max-height: 400px;
-  }
-
-  .sm\:max-w-\[400px\] {
-    max-width: 400px;
-  }
 }

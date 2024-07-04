@@ -167,8 +167,7 @@ class Image extends Genie
 
         return [
             "id" => $id,
-            "url" => $dataUri,
-            "share_url" => ""
+            "text" => $dataUri
         ];
     }
 }

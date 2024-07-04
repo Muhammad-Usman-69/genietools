@@ -1,7 +1,9 @@
 <?php
 
-class Text extends Genie {
-    function TextToMD5($text) {
+class Text extends Genie
+{
+    function TextToMD5($text)
+    {
         //creating id
         $id = "genie-texttomd5-" . $this->random_str(8);
 
@@ -9,8 +11,31 @@ class Text extends Genie {
 
         return [
             "id" => $id,
-            "url" => $md5,
-            "share_url" => ""
+            "text" => $md5
+        ];
+    }
+
+    function CaseConvert($text, $type)
+    {
+        if ($type == "uppercase") {
+            $result = strtoupper($text);
+        } else if ($type == "lowercase") {
+            $result = strtolower($text);
+        } else if ($type == "capitalize") {
+            $result = ucwords(strtolower($text));
+        } else if ($type == "sentencecase") {
+            $result = preg_replace_callback('/([.!?])\s*(\w)/', function ($matches) {
+                return strtoupper($matches[1] . ' ' . $matches[2]);
+            }, ucfirst(strtolower($text)));
+        } else {
+            $this->Error("Unknown Type");
+        }
+
+        $id = "genietools-caseconvertor-$type-" . $this->random_str(8);
+
+        return [
+            "id" => $id,
+            "text" => $result
         ];
     }
 }

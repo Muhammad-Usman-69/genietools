@@ -2,7 +2,7 @@ document.getElementById("home").addEventListener("click", () => {
     window.location.assign("/");
 });
 
-function loadData(data) {
+async function loadData(data) {
     console.log(data);
 
     //check if error
@@ -18,18 +18,19 @@ function loadData(data) {
     document.getElementById("form").classList.add("hidden");
 
     //taking cresidentials
+    let id = data["id"];
+
+    //if result is text
+    if (data["text"] != undefined) {
+        document.getElementById("text").value = data["text"];
+        return;
+    }
+
     let url = data["url"];
     let share_url = data["share_url"];
-    let id = data["id"];
 
     //changing image
     document.getElementById("retrieved").classList.remove("hidden");
-
-    //if result isn't shareable (i.e. text)
-    if (share_url == "") {
-        document.getElementById("text").value = url;
-        return;
-    }
 
     document.getElementById("file").src = url;
 
@@ -391,3 +392,36 @@ async function RemoveBackground() {
     //sending data to load Function
     loadData(data);
 }
+
+async function CaseConvert(type) {
+
+    //taking data from text
+    let text = document.getElementById("text").value;
+
+    //making min length
+    if (text.length < 3) {
+        document.getElementById("error").classList.remove("hidden");
+        document.getElementById("error").innerHTML = "Input too small. Must be 3 letter";
+        return;
+    }
+
+    //declaring endpoint
+    let url = "../php/caseconvertor.php";
+
+    let res = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({
+            "text": text,
+            "type": type
+        })
+    });
+
+    let data = await res.json();
+
+    //sending data to load Function
+    loadData(data);
+}
+
