@@ -2,11 +2,13 @@
 
 class Genie
 {
-    protected $error = false;
-
-    public $checked = false;
-
     protected $conn;
+    public $fileName;
+    public $fileTmpName;
+    public $fileError;
+    public $fileActualExt;
+    protected $error = false;
+    public $checked = false;
 
     function random_str(
         $length,
@@ -75,5 +77,41 @@ class Genie
             unlink($url);
             $this->Error("Couldn't save file. Please try later.");
         }
+    }
+
+    function Check($img, $allowed)
+    {
+        //taking file properties
+        $this->fileName = $img["name"];
+        $this->fileTmpName = $img["tmp_name"]; //path of image
+        $this->fileError = $img["error"];
+
+        //we get an array for file name and extension
+        $fileExt = explode(".", $this->fileName);
+
+        //making it lower case and taking (last element) extension like .jpg
+        $this->fileActualExt = strtolower(end($fileExt));
+
+        //check if file has extension which is not allowed
+        if (!in_array($this->fileActualExt, $allowed)) {
+            $this->Error("Type not Supported.");
+        }
+
+        //check if there is any error in file uploaded
+        if ($this->fileError !== 0) {
+            $this->Error("Error occured. Please try later.");
+        }
+
+        return $this->checked = true;
+    }
+
+    function BypassCheck($img) {
+        //taking file properties
+        $this->fileName = $img["name"];
+        $this->fileTmpName = $img["tmp_name"]; //path of image
+        $this->fileError = $img["error"];
+
+        //setting as check
+        return $this->checked = true;
     }
 }

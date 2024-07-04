@@ -28,7 +28,7 @@ $apiKey = TEXTTOVOICEAPI;
 //new obj
 $obj = new AI();
 
-$result = $obj->TextToAudio($prompt, $voice, $apiKey);
+$result = $obj->TextToAudioElevenLabs($prompt, $voice, $apiKey);
 
 $obj->dbConnect(DATABASE_HOSTNAME, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_NAME);
 $obj->saveToDb($result["id"], "Text To Audio", "audio", $prompt, $result["url"]);

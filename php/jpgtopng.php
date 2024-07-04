@@ -24,6 +24,6 @@ $result = $obj->JpgToPng();
 
 $obj->dbConnect(DATABASE_HOSTNAME, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_NAME);
 
-$obj->saveToDb($result["id"], "Jpg To Png", "image", "none", $result["url"]);
+$obj->saveToDb($result["id"], "JPG To PNG", "image", "none", $result["url"]);
 
 echo json_encode($result);

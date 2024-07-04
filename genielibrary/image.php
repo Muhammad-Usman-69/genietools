@@ -2,39 +2,6 @@
 
 class Image extends Genie
 {
-    public $fileName;
-    public $fileTmpName;
-    public $fileError;
-    public $fileActualExt;
-    protected $error = false;
-    public $checked = false;
-
-    function Check($img, $allowed)
-    {
-        //taking file properties
-        $this->fileName = $img["name"];
-        $this->fileTmpName = $img["tmp_name"]; //path of image
-        $this->fileError = $img["error"];
-
-        //we get an array for file name and extension
-        $fileExt = explode(".", $this->fileName);
-
-        //making it lower case and taking (last element) extension like .jpg
-        $this->fileActualExt = strtolower(end($fileExt));
-
-        //check if file has extension which is not allowed
-        if (!in_array($this->fileActualExt, $allowed)) {
-            $this->Error("Type not Supported.");
-        }
-
-        //check if there is any error in file uploaded
-        if ($this->fileError !== 0) {
-            $this->Error("Error occured. Please try later.");
-        }
-
-        $this->checked = true;
-    }
-
     function PngToJpg()
     {
         //if not checked
@@ -104,6 +71,7 @@ class Image extends Genie
             "share_url" => $share_url
         ];
     }
+
     function ImgToText()
     {
         //if not checked
@@ -118,6 +86,11 @@ class Image extends Genie
         try {
             $data = file_get_contents($this->fileTmpName);
             $dataUri = 'data:image/' . $this->fileActualExt . ';base64,' . base64_encode($data);
+
+            //check greator than 300000 character
+            if (strlen($dataUri) > 300000) {
+                $this->Error("Can't be converted to text. Image size is exceeded.");
+            }
         } catch (Exception $e) {
             $this->Error("Internal error. Please try later.");
         }

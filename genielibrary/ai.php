@@ -1,13 +1,13 @@
 <?php
 
-require '../../vendor/autoload.php';
+require '../vendor/autoload.php';
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 
 class AI extends Genie
 {
-    function getVoices($apiKey)
+    function getVoicesElevenLabs($apiKey)
     {
         try {
             // The ElevenLabs API endpoint to get supported languages
@@ -50,7 +50,7 @@ class AI extends Genie
         }
     }
 
-    function TextToAudio($prompt, $voice, $apiKey)
+    function TextToAudioElevenLabs($prompt, $voice, $apiKey)
     {
         try {
             $client = new Client();
@@ -84,11 +84,11 @@ class AI extends Genie
             $fname = $id . ".mp3";
 
             // Define the path where you want to save the audio file
-            $audio_url = "../v1/audio/$fname";
+            $destination = "../v1/audio/$fname";
             $share_url = "{$_SERVER["SERVER_NAME"]}/v1/audio/$fname";
 
             // Open a file in write mode ('w')
-            $file = fopen($audio_url, 'w');
+            $file = fopen($destination, 'w');
 
             // Write the stream to the file if body is still giving it data
             while (!$body->eof()) {
@@ -99,7 +99,7 @@ class AI extends Genie
             fclose($file);
 
             return [
-                "url" => $audio_url,
+                "url" => $destination,
                 "share_url" => $share_url,
                 "id" => $id
             ];
@@ -110,7 +110,7 @@ class AI extends Genie
         }
     }
 
-    function TextToImage($prompt, $aspect_ratio, $apiKey)
+    function TextToImageLimeWire($prompt, $aspect_ratio, $apiKey)
     {
         try {
             $client = new Client();
@@ -143,7 +143,7 @@ class AI extends Genie
                 $this->Error("Request couldn't be finished");
             }
 
-            
+
             //creating id
             $id = "genie-texttoimage-" . $this->random_str(8);
 
@@ -155,14 +155,14 @@ class AI extends Genie
             $typeArr = explode("/", $type);
             $file_ext = end($typeArr);
 
-            $url = "../v1/image/$id.$file_ext";
+            $destination = "../v1/image/$id.$file_ext";
 
-            file_put_contents($url, file_get_contents($remote_url));
+            file_put_contents($destination, file_get_contents($remote_url));
 
             $share_url = "{$_SERVER["SERVER_NAME"]}/v1/audio/$id.$file_ext";
 
             return [
-                "url" => $url,
+                "url" => $destination,
                 "share_url" => $share_url,
                 "id" => $id
             ];
@@ -171,5 +171,51 @@ class AI extends Genie
             // Handle the request exception
             $this->Error("Server not responding, please try later.");
         }
+    }
+
+    function RemoveBackground($apiKey)
+    {
+        //if not checked
+        if ($this->checked == false) {
+            $this->Error("Not Checked.");
+        }
+
+        try {
+            $client = new Client();
+
+            $endpoint = "https://api.remove.bg/v1.0/removebg";
+
+            //sending message
+            $response = $client->post($endpoint, [
+                'headers' => [
+                    'X-Api-Key' => "$apiKey"
+                ],
+                'multipart' => [
+                    [
+                        'name' => 'image_file',
+                        'contents' => fopen($this->fileTmpName, "r")
+                    ]
+                ]
+            ]);
+        } catch (Exception $e) {
+            echo print_r($e);
+            $this->Error("Server not responding, please try later.");
+        }
+
+        //creating destination
+        $id = "genietools-removebg-" . $this->random_str(8);
+        $destination = "../v1/image/" . $id . ".$this->fileActualExt";
+        $share_url = "{$_SERVER["SERVER_NAME"]}/v1/image/" . $id . ".$this->fileActualExt";
+
+        //saving file
+        $fp = fopen($destination, "wb");
+        fwrite($fp, $response->getBody());
+        fclose($fp);
+
+        return [
+            "url" => $destination,
+            "share_url" => $share_url,
+            "id" => $id
+        ];
     }
 }

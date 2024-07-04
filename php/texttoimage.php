@@ -28,7 +28,7 @@ $apiKey = TEXTTOIMAGEAPI;
 //new obj
 $obj = new AI();
 
-$result = $obj->TextToImage($prompt, $aspect_ratio, $apiKey);
+$result = $obj->TextToImageLimeWire($prompt, $aspect_ratio, $apiKey);
 
 $obj->dbConnect(DATABASE_HOSTNAME, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_NAME);
 $obj->saveToDb($result["id"], "Text To Image", "image", $prompt, $result["url"]);
