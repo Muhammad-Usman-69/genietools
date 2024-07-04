@@ -22,7 +22,7 @@ class Image extends Genie
             $this->Error("Invalid PNG file.");
         }
 
-        $result = imagejpeg($img, $destination, 100); //100 is quality. 0 means worst and compressed
+        $result = imagejpeg($img, $destination, 70); //100 is quality. 0 means worst and compressed
 
         if ($result === false) {
             $this->Error("Image conversion failed.");
@@ -56,7 +56,77 @@ class Image extends Genie
             $this->Error("Invalid PNG file.");
         }
 
-        $result = @imagepng($img, $destination, 0); // 0 to 9 . Zero means no compression
+        $result = @imagepng($img, $destination, 3); // 0 to 9 . Zero means no compression
+
+        if ($result == false) {
+            unlink($destination);
+            $this->Error("Image conversion failed.");
+        }
+
+        imagedestroy($img);
+
+        return [
+            "id" => $id,
+            "url" => $destination,
+            "share_url" => $share_url
+        ];
+    }
+
+    function WebpToPng()
+    {
+        //if not checked
+        if ($this->checked == false) {
+            $this->Error("Not Checked.");
+        }
+
+        //creating destination
+        $id = "genietools-webptopng-" . $this->random_str(8);
+        $destination = "../v1/image/" . $id . ".png";
+        $share_url = "{$_SERVER["SERVER_NAME"]}/v1/image/" . $id . ".png";
+
+        //changing image
+        $img = @imagecreatefromwebp($this->fileTmpName); //suppress error with @
+
+        if ($img == false) {
+            $this->Error("Invalid WEBP file.");
+        }
+
+        $result = @imagepng($img, $destination, 3); // 0 to 9 . Zero means no compression
+
+        if ($result == false) {
+            unlink($destination);
+            $this->Error("Image conversion failed.");
+        }
+
+        imagedestroy($img);
+
+        return [
+            "id" => $id,
+            "url" => $destination,
+            "share_url" => $share_url
+        ];
+    }
+
+    function PngToWebp()
+    {
+        //if not checked
+        if ($this->checked == false) {
+            $this->Error("Not Checked.");
+        }
+
+        //creating destination
+        $id = "genietools-pngtowebp-" . $this->random_str(8);
+        $destination = "../v1/image/" . $id . ".webp";
+        $share_url = "{$_SERVER["SERVER_NAME"]}/v1/image/" . $id . ".webp";
+
+        //changing image
+        $img = @imagecreatefrompng($this->fileTmpName); //suppress error with @
+
+        if ($img == false) {
+            $this->Error("Invalid PNG file.");
+        }
+
+        $result = @imagewebp($img, $destination, 70); // 0 to 100 . Zero means no compression
 
         if ($result == false) {
             unlink($destination);
