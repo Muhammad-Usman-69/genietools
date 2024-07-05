@@ -204,8 +204,8 @@ class AI extends Genie
 
         //creating destination
         $id = "genietools-removebg-" . $this->random_str(8);
-        $destination = "../v1/image/" . $id . ".$this->fileActualExt";
-        $share_url = "{$_SERVER["SERVER_NAME"]}/v1/image/" . $id . ".$this->fileActualExt";
+        $destination = "../v1/image/" . $id . ".png";
+        $share_url = "{$_SERVER["SERVER_NAME"]}/v1/image/" . $id . ".png";
 
         //saving file
         $fp = fopen($destination, "wb");

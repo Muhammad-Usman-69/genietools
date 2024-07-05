@@ -108,7 +108,8 @@ class Genie
         return $this->checked = true;
     }
 
-    function BypassCheck($img) {
+    function BypassCheck($img)
+    {
         //taking file properties
         $this->fileName = $img["name"];
         $this->fileTmpName = $img["tmp_name"]; //path of image

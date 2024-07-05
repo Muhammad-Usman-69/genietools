@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,8 @@
     <link rel="shortcut icon" href="images/logo.jpg" type="image/x-icon">
     <link rel="stylesheet" href="side/styles/style.css">
 </head>
-<body class="h-screen flex flex-col font-sans bg-[#e4eaf2] space-y-5">
+
+<body class="min-h-screen flex flex-col font-sans bg-[#e4eaf2]">
 
     <header class="p-3 border-b border-gray-800 flex items-center bg-white">
         <a href="/" class="flex flex-row items-center space-x-3">
@@ -17,10 +19,16 @@
         </a>
     </header>
 
-    <p class="text-center font-bold text-xl">Genie Tools</p>
+    <main class="space-y-5 my-5">
+        <p class="text-center font-bold text-xl">Genie Tools</p>
 
-    <div id="tools-container" class="bg-white mx-5 p-4 border border-gray-800 flex justify-center flex-wrap">
-    </div>
+        <div id="tools-container" class="bg-white mx-5 p-4 border border-gray-800 flex justify-center flex-wrap"></div>
+    </main>
+
+    <footer class="bg-white border-gray-800 border-t mt-auto">
+        <p class="text-center py-4">GenieTools | &copy; 2024 All Rights Reserved</p>
+    </footer>
     <script src="./side/scripts/tools.js"></script>
 </body>
+
 </html>

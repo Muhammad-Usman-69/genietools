@@ -8,7 +8,7 @@ async function fetchTools() {
         const url = tool.url;
         const img = tool.image;
         document.getElementById("tools-container").innerHTML +=
-        `<a href="${url}" class="m-4 w-36 p-4 flex flex-col items-center justify-center space-y-4 border border-gray-800">
+        `<a href="${url}" class="m-4 w-28 p-4 flex flex-col items-center justify-center space-y-4 border border-gray-800">
             <img src="${img}" class="w-full">
             <p class="text-center font-semibold text-lg">${name}</p>
         </a>`;
