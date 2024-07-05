@@ -401,7 +401,7 @@ async function ImageToText() {
 }
 
 async function TextToMD5() {
-    
+
     //showing that request is being proceded
     document.getElementById("process").classList.remove("hidden");
 
@@ -500,7 +500,7 @@ async function CaseConvert(type) {
 }
 
 async function WordCounter() {
-    
+
     //showing that request is being proceded
     document.getElementById("process").classList.remove("hidden");
 
@@ -525,6 +525,65 @@ async function WordCounter() {
 
     let data = await res.json();
 
+    //sending data to load Function
+    loadData(data);
+}
+
+async function ColorCodeConvertor(type) {
+    let color = [];
+    //convert for type
+    let convert = "";
+
+    if (type.includes("rgb")) {
+        //getting data
+        const red = document.getElementById("red");
+        const green = document.getElementById("green");
+        const blue = document.getElementById("blue");
+        const alpha = document.getElementById("alpha");
+
+        //setting value
+        color = [red.value, green.value, blue.value, alpha.value];
+        convert = "hex";
+
+        //clearing prompt
+        red.value = "";
+        green.value = "";
+        blue.value = "";
+        alpha.value = "";
+
+    } else if (type.includes("hex")) {
+        const hex = document.getElementById("hex");
+
+        //setting value
+        color = [(hex.value).replace("#", "").replace(" ", "")];
+        convert = "rgba"
+
+        //clearing
+        hex.value = "";
+    }
+
+    //declaring endpoint
+    let url = "../php/colorcodeconvertor.php";
+
+    //declaring para
+    let params = new URLSearchParams();
+
+    //assinging value to para
+    color.forEach((val, index) => {
+        params.append(`color[${index}]`, val);
+    });
+    params.append('convert', convert);
+
+    let res = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: params
+    });
+
+    let data = await res.json();
+    
     //sending data to load Function
     loadData(data);
 }

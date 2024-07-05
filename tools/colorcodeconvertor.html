@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Muhammad Usman">
+    <link rel="stylesheet" href="../side/styles/style.css">
+    <link rel="shortcut icon" href="../images/logo.jpg" type="image/x-icon">
+    <title>Color Code Convertor - GenieTools</title>
+</head>
+
+<body class="flex items-center justify-center h-screen font-sans bg-[#e4eaf2]">
+    <button id="home"
+        class="absolute m-5 top-0 left-0 text-[#d1a514] bg-white py-2 px-4 rounded-lg border border-yellow-400">Home</button>
+
+    <div class="w-[400px] m-4 bg-white rounded-lg border border-black">
+        <div class="flex flex-col items-center justify-center border-white py-4 space-y-3">
+            <img src="../images/logo.jpg" width="80px" height="80px" class="rounded-full">
+            <p class="text-center font-semibold text-[##01172e] text-lg">GenieTools - Color Code Convertor</p>
+        </div>
+        <div id="retrieved" class="hidden">
+            <div class="flex w-full p-3">
+                <input type="text" id="text" class="text-[#001c2d] outline-none border px-3 py-2 w-full rounded-l-lg"
+                    value="" required readonly />
+                <button id="clipboard"
+                    class="bg-[#fac100] active:bg-[#dfad09] text-white rounded-r-lg border border-yellow-400 p-2">
+                    <img src="../images/copy-files.png" class="invert" width="30px" height="30px">
+                </button>
+            </div>
+        </div>
+        <p id="process" class="py-3 px-5 bg-green-300 text-green-800 hidden">Your Text is being processed...</p>
+        <p id="error" class="py-3 px-5 bg-red-300 text-red-800 hidden"></p>
+        <div action="" id="form" class="flex rounded-b-lg p-3 text-sm space-y-3 flex-col">
+            <div class="flex justify-between font-semibold text-gray-800">
+                <p class="font-normal">Select your desired color code:</p>
+                <div class="flex space-x-4">
+                    <div class="flex items-center space-x-1">
+                        <input type="radio" name="hexrgba" id="hexa" oninput="showCont('hex')" checked>
+                        <label for="hexa">HEX</label>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <input type="radio" name="hexrgba" id="rgba" oninput="showCont('rgb')">
+                        <label for="rgba">RGBA</label>
+                    </div>
+                </div>
+            </div>
+            <form action="" id="rgba-container" class="grid grid-cols-5 convert-form hidden">
+                <input type="number" name="red" id="red" class="outline-none border px-3 py-2" required min="0"
+                    max="255" placeholder="red" required />
+                <input type="number" name="green" id="green" class="outline-none border px-3 py-2" required min="0"
+                    max="255" placeholder="green" required />
+                <input type="number" name="blue" id="blue" class="outline-none border px-3 py-2" required min="0"
+                    max="255" placeholder="blue" required />
+                <input type="number" name="alpha" id="alpha" class="outline-none border px-3 py-2" required min="0"
+                    max="1" placeholder="alpha" step=".1" required />
+                <button type="submit"
+                    class="bg-[#fac100] text-white px-3 py-2 border border-yellow-400">Convert</button>
+            </form>
+            <form action="" id="hex-container" class="grid grid-cols-5 convert-form">
+                <input value="" type="text" id="hex" class="outline-none border px-3 py-2 col-span-4" required minlength="3"
+                    maxlength="9" placeholder="#fff" required />
+                <button type="submit"
+                    class="bg-[#fac100] text-white px-3 py-2 border border-yellow-400">Convert</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script src="../side/scripts/dev.js"></script>
+<script>
+    function showCont(type) {
+        //taking containers
+        let rgbCont = document.querySelector("#rgba-container");
+        let hexCont = document.querySelector("#hex-container");
+
+        if (type == 'hex') {
+            //if hex then hiding rgb container 
+            rgbCont.classList.add("hidden");
+            hexCont.classList.remove("hidden");
+        } else {
+            //if rgb then hiding hex container 
+            hexCont.classList.add("hidden");
+            rgbCont.classList.remove("hidden");
+        }
+    }
+
+    //looping through form and then submitting it
+    document.querySelectorAll(".convert-form").forEach(form => {
+        form.addEventListener("submit", (e) => {
+            //hiding previous error and process
+            document.getElementById("error").classList.add("hidden");
+            document.getElementById("process").classList.add("hidden");
+
+            //preventing default submit
+            e.preventDefault();
+
+            ColorCodeConvertor(form.id);
+        })
+    })
+
+    document.getElementById("clipboard").addEventListener("click", () => {
+        const word = document.getElementById("text").value;
+        copy(word);
+    })
+</script>
+
+</html>
