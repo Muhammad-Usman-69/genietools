@@ -61,6 +61,7 @@ class Genie
 
     function saveToDb($id, $method, $type, $prompt, $url)
     {
+        //stopper
         // return;
 
         // Taking current time

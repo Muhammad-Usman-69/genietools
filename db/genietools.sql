@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 04, 2024 at 01:14 PM
+-- Generation Time: Jul 05, 2024 at 08:20 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -64,6 +64,7 @@ INSERT INTO `prompts` (`id`, `method`, `type`, `prompt`, `url/result`, `time`) V
 ('genietools-removebg-bcb1a2wo', 'Remove Background', 'image', 'none', '../v1/image/genietools-removebg-bcb1a2wo.jpg', '2024:07:04 1:00 pm'),
 ('genietools-removebg-cn3z4d6e', 'Remove Background', 'image', 'none', '../v1/image/genietools-removebg-cn3z4d6e.jpg', '2024:07:04 1:00 pm'),
 ('genietools-removebg-rbvvkyya', 'Remove Background', 'image', 'none', '../v1/image/genietools-removebg-rbvvkyya.jpg', '2024:07:04 1:01 pm'),
+('genietools-wordcounter-hwzfo3bx', 'Word Counter', 'text', 'This is a pen. I am using word counter or am I?', 'Words: 12 Letters: 34 Sentences: 2', '2024:07:05 11:19 am'),
 ('genietools-wordcounter-ie2e0eks', 'Word Counter', 'text', 'This approach ensures that only alphabetic characters are counted, aligning with typical SEO considerations.', 'Words: 14 Letters: 93', '2024:07:04 4:13 pm');
 
 -- --------------------------------------------------------

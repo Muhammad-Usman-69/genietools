@@ -43,11 +43,14 @@ class Text extends Genie
     {
         $words = str_word_count($text);
 
+        //returning sentences based of regular expressions
+        $sentences = preg_match_all('([^\.\!\?]+[\.\?\!]*)', $text);
+
         // Remove non-letter characters
         $onlyLetters = preg_replace("/[^a-zA-Z]/", "", $text);
         $letters = strlen($onlyLetters);
 
-        $result = "Words: $words Letters: $letters";
+        $result = "Words: $words Letters: $letters Sentences: $sentences";
 
         $id = "genietools-wordcounter-" . $this->random_str(8);
 
