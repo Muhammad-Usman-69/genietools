@@ -21,10 +21,10 @@ $obj = new Image();
 //check ext
 $check = $obj->Check($img, $allowed);
 
-$result = $obj->ImgToText();
+$result = $obj->ImgToURI();
 
 $obj->dbConnect(DATABASE_HOSTNAME, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_NAME);
 
-$obj->saveToDb($result["id"], "Image To Text", "text", "none", $result["text"]);
+$obj->saveToDb($result["id"], "Image To URI", "text", "none", $result["text"]);
 
 echo json_encode($result);

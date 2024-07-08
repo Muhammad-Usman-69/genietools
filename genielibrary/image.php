@@ -1,5 +1,8 @@
 <?php
 
+require "../vendor/autoload.php";
+use thiagoalessio\TesseractOCR\TesseractOCR;
+
 class Image extends Genie
 {
     function PngToJpg()
@@ -213,7 +216,7 @@ class Image extends Genie
         ];
     }
 
-    function ImgToText()
+    function ImgToURI()
     {
         //if not checked
         if ($this->checked == false) {
@@ -221,7 +224,7 @@ class Image extends Genie
         }
 
         //creating id
-        $id = "genietools-imagetotext-" . $this->random_str(8);
+        $id = "genietools-imagetouri-" . $this->random_str(8);
 
         //converting to text
         try {
@@ -240,5 +243,38 @@ class Image extends Genie
             "id" => $id,
             "text" => $dataUri
         ];
+    }
+
+    function ImgTxtReader()
+    {
+        //if not checked
+        if ($this->checked == false) {
+            $this->Error("Not Checked.");
+        }
+
+        //creating id
+        $id = "genietools-imagetextreader-" . $this->random_str(8);
+
+        //extracting text
+
+        try {
+            // Perform OCR
+            $text = (new TesseractOCR($this->fileTmpName))
+                ->run();
+
+            $fp = fopen("../v1/text/$id.txt", "w");
+            fwrite($fp, $text, 1000);
+            fclose($fp);
+
+            return [
+                "id" => $id,
+                "url" => "../v1/text/$id.txt",
+                "share_url" => "{$_SERVER["SERVER_NAME"]}/v1/text/$id.txt"
+            ];
+
+        } catch (Exception $e) {
+            // Handle any errors that occur during OCR
+            $this->Error("No Text Found");
+        }
     }
 }

@@ -7,7 +7,7 @@
     <meta name="author" content="Muhammad Usman">
     <link rel="stylesheet" href="../side/styles/style.css">
     <link rel="shortcut icon" href="../images/logo.jpg" type="image/x-icon">
-    <title>Image To Text - GenieTools</title>
+    <title>Image Text Reader - GenieTools</title>
 </head>
 
 <body class="flex items-center justify-center h-screen font-sans bg-[#e4eaf2]">
@@ -17,16 +17,35 @@
     <div class="w-[400px] m-4 bg-white rounded-lg border border-black">
         <div class="flex flex-col items-center justify-center border-white py-4 space-y-3">
             <img src="../images/logo.jpg" width="80px" height="80px" class="rounded-full">
-            <p class="text-center font-semibold text-[##01172e] text-lg">GenieTools - Image To Text</p>
+            <p class="text-center font-semibold text-[##01172e] text-lg">GenieTools - Image Text Reader</p>
         </div>
         <div id="retrieved" class="hidden">
-            <div class="flex w-full p-3">
-                <input type="text" id="text" class="text-[#001c2d] outline-none border px-3 py-2 w-full rounded-l-lg"
-                    value="" required readonly />
-                <button id="clipboard"
-                    class="bg-[#fac100] active:bg-[#dfad09] text-white rounded-r-lg border border-yellow-400 p-2">
-                    <img src="../images/copy-files.png" class="invert" width="30px" height="30px">
-                </button>
+            <div class="flex justify-center">
+                <iframe src="../v1/text/output.txt" class="w-full px-4" id="file" frameborder="0"></iframe>
+            </div>
+            <div class="p-3 flex justify-between">
+                <div class="space-x-3 flex items-center">
+                    <a id="facebook" target="_blank">
+                        <img src="../images/facebook.png" width="36px" height="36px">
+                    </a>
+                    <a id="whatsapp" target="_blank">
+                        <img src="../images/whatsapp.png" width="36px" height="36px">
+                    </a>
+                    <a id="twitter" target="_blank">
+                        <img src="../images/twitter.png" width="36px" height="36px">
+                    </a>
+                </div>
+                <div class="space-x-3 flex">
+                    <button id="clipboard">
+                        <img src="../images/link.png" width="36px" height="36px">
+                    </button>
+                    <form action="../php/download.php" target="_blank" class="w-9 h-9" method="post">
+                        <button type="submit">
+                            <img src="../images/download.png">
+                        </button>
+                        <input type="hidden" id="download_id" name="id">
+                    </form>
+                </div>
             </div>
         </div>
         <p id="process" class="py-3 px-5 bg-green-300 text-green-800 hidden">Your Image is being processed...</p>
@@ -53,12 +72,7 @@
         //preventing default submit
         e.preventDefault();
 
-        ImageToText();
-    })
-
-    document.getElementById("clipboard").addEventListener("click", () => {
-        const word = document.getElementById("text").value;
-        copy(word);
+        ImageTextReader();
     })
 </script>
 
