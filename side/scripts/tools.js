@@ -3,6 +3,8 @@ async function fetchTools() {
     const endpoint = "../php/side/tools.php";
     let res = await fetch(endpoint);
     let tools = await res.json();
+    //clearing container
+    document.getElementById("tools-container").innerHTML = "";
     tools.map(tool => {
         const name = tool.name;
         const url = tool.url;

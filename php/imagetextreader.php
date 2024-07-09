@@ -25,6 +25,6 @@ $result = $obj->ImgTxtReader();
 
 $obj->dbConnect(DATABASE_HOSTNAME, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_NAME);
 
-$obj->saveToDb($result["id"], "Image Text Reader", "text file", "none", $result["url"]);
+$obj->saveToDb($result["id"], "Image Text Reader", "text", "none", $result["url"]);
 
 echo json_encode($result);

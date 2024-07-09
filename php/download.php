@@ -33,7 +33,7 @@ $row = mysqli_fetch_assoc($result);
 
 //taking image
 $id = $row["id"];
-$url = $row["url"];
+$url = $row["url/result"];
 $type = $row["type"];
 
 $arr = explode("/", $url);
