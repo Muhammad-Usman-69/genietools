@@ -218,4 +218,79 @@ class AI extends Genie
             "id" => $id
         ];
     }
+
+    function ImgTxtReaderEdenAI($apiKey)
+    {
+        //if not checked
+        if ($this->checked == false) {
+            $this->Error("Not Checked.");
+        }
+
+        $id = "genietools-imagetextreader-" . $this->random_str(8);
+
+        $tempData = file_get_contents($this->fileTmpName);
+
+        //creating temp path to send data
+        $tempPath = "../v1/temp/$id." . $this->fileActualExt;
+        $fp = fopen($tempPath, "w");
+        fwrite($fp, $tempData);
+        fclose($fp);
+
+        $client = new Client();
+
+        try {
+            $endpoint = "https://api.edenai.run/v2/ocr/ocr";
+
+            //sending message
+            $response = $client->post($endpoint, [
+                'headers' => [
+                    'authorization' => "Bearer $apiKey"
+                ],
+                'multipart' => [
+                    [
+                        'name' => 'providers',
+                        'contents' => 'google',
+                    ],
+                    [
+                        'name' => 'file',
+                        'contents' => fopen($tempPath, 'r'),
+                    ],
+                    [
+                        'name' => 'language',
+                        'contents' => 'en',
+                    ]
+                ],
+            ]);
+
+            //creating destination
+            $destination = "../v1/text/" . $id . ".txt";
+            $share_url = "{$_SERVER["SERVER_NAME"]}/v1/image/" . $id . ".txt";
+
+            $body = json_decode($response->getBody());
+
+            //deleting img
+            unlink($tempPath);
+
+            //to access stdClass
+            $text = $body->{"google"}->{"text"};
+
+            //saving file
+            $fp = fopen($destination, "w");
+            fwrite($fp, $text);
+            fclose($fp);
+
+            return [
+                "url" => $destination,
+                "share_url" => $share_url,
+                "id" => $id
+            ];
+        } catch (Exception $e) {
+            //deleting img
+            unlink($tempPath);
+            
+            $this->Error("Server not responding, please try later.");
+        }
+
+
+    }
 }

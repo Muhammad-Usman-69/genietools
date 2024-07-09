@@ -15,13 +15,11 @@ require "config.php";
 
 $img = $_FILES["image"];
 
-//changing image now
-$obj = new Image();
+$obj = new AI();
 
-//check ext
 $check = $obj->Check($img, $allowed);
 
-$result = $obj->ImgTxtReader();
+$result = $obj->ImgTxtReaderEdenAI(EDENAIAPI);
 
 $obj->dbConnect(DATABASE_HOSTNAME, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_NAME);
 

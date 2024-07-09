@@ -245,7 +245,7 @@ class Image extends Genie
         ];
     }
 
-    function ImgTxtReader()
+    function ImgTxtReaderTesseract()
     {
         //if not checked
         if ($this->checked == false) {
